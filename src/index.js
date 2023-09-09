@@ -1,5 +1,5 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { fetchPhoto } from './js/pixabay_api';
+import { fetchPhoto } from './js/pixabayAPI';
 import { createMarkup } from './js/markup';
 import { refs } from './js/refs';
 import { lightbox } from './js/lightbox';
