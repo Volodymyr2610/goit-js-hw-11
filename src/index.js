@@ -53,7 +53,7 @@ function onSubmitForm(event) {
           `Hooray! We found ${data.totalHits} images.`,
           paramsForNotify
         );
-        // console.log(searchResults);
+       
         createMarkup(searchResults);
         lightbox.refresh();
       }
@@ -100,14 +100,19 @@ function onFetchError() {
   );
 }
 
-function showLoadMorePage() {
-  if (scrollPage()) {
-    onClickLoadMore();
-  }
-}
+window.addEventListener('scroll', throttle(onScroll, 500));
 
-function scrollPage() {
-  return (
-    window.innerHeight + window.scrollY >= document.documentElement.scrollHeight
-  );
+function onScroll() {
+  if (pixabayImg.page > maxPage) {
+    return;
+  }
+
+  const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+
+  const scrollPosition = scrollHeight - clientHeight;
+  const scrollTopRound = Math.round(scrollTop);
+
+  if (scrollTopRound >= scrollPosition - 1) {
+    pixabayImg.getImage().then(markupImgSearch);
+  }
 }
